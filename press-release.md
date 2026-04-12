@@ -1,31 +1,15 @@
-# 🚨 Have An Emergency? Help Might Already Be on the Way
-## Faster care. Smarter decisions. Lives saved.
+# At the Pump and At the Polls
+## How Economic Pain Predicts Who Wins the White House
 
 ## The Problem
-When someone calls for help in a medical emergency, every second matters. And in a busy city, those seconds can slip away quickly.
-
-In places like Sydney, Australia, emergency responders are dealing with more calls than ever before. Ambulances can get stuck in traffic, hospitals may already be at capacity, and dispatchers often have to make quick decisions without a complete, real-time view of what’s happening across the system. Weather conditions, road closures, and sudden spikes in demand can make coordination even harder.
-
-Right now, much of this information lives in separate systems that don’t always “talk” to each other. This can lead to delays, longer wait times, and situations where patients aren’t always taken to the best possible location for their needs. For people in critical condition, even small delays can have serious consequences.
+Every four years, Americans head to the polls to decide who should lead the country. BUT...reserarch suggests that by the time Election Day arrives, many minds are already made up at the gas station. When prices are high and paychecks feel stretched, voters tend to blame whoever is in charge. When times feel good, however, they're given the credit. 
+This relationship between everyday economic pain and presidential election outcomes has yet to be examined in a data-driven way. So, this project sets out to answer a simple questions: do rising gas prices and inflation actually cost the incumbent party votes? And if yes, by how much?
 
 ## The Solution
-Now imagine a more connected, responsive emergency system. One that helps responders see the full picture and act faster.
+Using 45 years of U.S. presidential election results paired with historical gas price and inflation data, the analysis reveals a consistent pattern. When consumers feel economic pressure in the year leading up to an election, they party in power pays for it at the polls. 
 
-The Integrated Emergency Response Analytics Dataset (IERAD) brings together information from across the emergency network into one unified view. With this, emergency teams can:
-
-- Find and take the fastest, least congested routes in real time
-- Use drones to quickly assess scenes before teams arrive
-- Send patients to hospitals that are best equipped and ready to treat them
-
-By combining this information, responders can make quicker, more informed decisions as situations unfold, not minutes later. This means better coordination between ambulances, hospitals, and support teams, even during high-pressure moments.
-
-Importantly, this technology doesn’t replace human decision-making -> it strengthens it. Emergency professionals remain at the center, using these tools to guide their judgment and respond with greater speed, accuracy, and confidence.
-
-SO, this matters because...why?
-
-For the person waiting for help, this could mean faster care, better treatment, and a higher chance of recovery.
-
-Because in an emergency, the right decision made at the right time can save a life.
+What does this mean for you? (Assuming you're an American citizen who can vote.) 
+You don't need to follow the. news obsessively or understand economic policy to predict who might win the next presidential election. The price you pay to fill up your tank and buy groceries may already be telling that story. This research gives everyday Americans a new lens for understanding why elections may turn out the way they do.
 
 ## Chart
 
