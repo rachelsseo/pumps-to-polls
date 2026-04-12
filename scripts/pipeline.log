@@ -1,0 +1,48 @@
+2026-03-30 21:22:35 | INFO     | Logging initialised — writing to pipeline.log
+2026-03-30 21:22:47 | DEBUG    | Registered view: incident -> ../parquet-data/incident.parquet
+2026-03-30 21:22:47 | DEBUG    | Registered view: environmental -> ../parquet-data/environmental_conditions.parquet
+2026-03-30 21:22:47 | DEBUG    | Registered view: resource -> ../parquet-data/resource.parquet
+2026-03-30 21:22:47 | DEBUG    | Registered view: dispatch -> ../parquet-data/dispatch.parquet
+2026-03-30 21:22:47 | INFO     | All DuckDB views registered successfully
+2026-03-30 21:22:59 | INFO     | Q1 join complete: 368,065 rows x 25 columns
+2026-03-30 21:23:03 | INFO     | Q2 label distribution:
+          Label      n  pct
+     Drone Only 183690 49.9
+ Ambulance Only 147526 40.1
+Hybrid Dispatch  36849 10.0
+2026-03-30 21:23:11 | INFO     | Q3 region/label response times:
+Region_Type           Label  avg_response_min  n_incidents
+   Suburban Hybrid Dispatch             15.02         7325
+      Urban  Ambulance Only             15.04       103171
+   Suburban      Drone Only             15.04        36867
+      Urban      Drone Only             15.06       128599
+      Urban Hybrid Dispatch             15.06        25835
+      Rural  Ambulance Only             15.07        14736
+      Rural      Drone Only             15.08        18224
+   Suburban  Ambulance Only             15.09        29619
+      Rural Hybrid Dispatch             15.24         3689
+2026-03-30 21:23:17 | INFO     | Timestamp features engineered: hour, weekday
+2026-03-30 21:23:17 | INFO     | Feature matrix shape: (368065, 23)
+2026-03-30 21:23:22 | INFO     | Train/test split: 294,452 train, 73,613 test
+2026-03-30 21:56:01 | INFO     | Classifier CV accuracy: 0.499 +/- 0.000
+2026-03-30 21:56:02 | INFO     | Classifier test report:
+                 precision    recall  f1-score   support
+
+ Ambulance Only       0.40      0.32      0.36     29505
+     Drone Only       0.50      0.30      0.37     36738
+Hybrid Dispatch       0.10      0.38      0.16      7370
+
+       accuracy                           0.32     73613
+      macro avg       0.33      0.33      0.30     73613
+   weighted avg       0.42      0.32      0.35     73613
+
+2026-03-30 21:58:32 | INFO     | Regressor MAE: 3.95 min | R2: -0.000
+2026-03-30 21:58:32 | WARNING  | R2 near zero — Response_Time may have low variance or insufficient signal in features. Check df['Response_Time'].describe().
+2026-03-30 21:59:20 | INFO     | Top 5 classifier features:
+Drone_Speed             0.146645
+Ambulance_Speed         0.128795
+Battery_Life            0.126616
+Distance_to_Incident    0.118045
+Fuel_Level              0.114371
+2026-03-30 21:59:24 | INFO     | Figure saved to ierad_results.png
+2026-03-30 21:59:24 | INFO     | Pipeline complete — see pipeline.log for full run details
