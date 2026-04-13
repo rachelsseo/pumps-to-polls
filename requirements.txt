@@ -1,7 +1,7 @@
 pandas 
 numpy 
-pyarrow
 scikit-learn
-joblib 
-duckdb
 matplotlib
+pymongo
+dotenv
+logging
