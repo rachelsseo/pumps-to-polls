@@ -73,36 +73,79 @@ This project lives in the intersection of political science, economics, and data
 ## Data Creation 
 
 ### Provenance 
+The dataset used in this analysis was constructed by merging three publicly available data sources. Presidential election returns were sources from the MIT Election Data Science Lab's U.S. President 1976-2020 dataset. This dataset aggregates state-level candidate vote totlas across all major and minor parties for each presidential cycle.
+Annual average retail gas prices were downloaded from the Federal Reserve Economic Data (FRED) and so was the inflation data. The inflation data was drawn via the Consumer Price Index for All Urban Consumers.
 
+All three datasets were first downloaded in CSV format, cleaned and aggregated to the election-yera level in Python using pandas, merged on the shared `year` key, and loaded into a MongoDB Atlas collection.
 
 
 ### Code 
 | File | Description | Link |
 |---|---|---|
-
+| data-creation.py | Combined and cleaned dataset merging the three sources above at the state-year level, with incumbent vote share, gas price % change, and inflation rate per election year, loaded into MongoDB Atlas | [Link in Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/data-creation.py) |
 
 ### Bias Identification 
 
+Several sources of bias may have been introduced during both the raw data collection and merging process. Since the MIT Election Data Science Lab dataset aggregates official state-certified vote totals, this means any systemic issues in vote reporting are inherited directly into analysis.
+
+The decision to calculate incumbent vote share against *all* votes rather than the strict two-party vote introduces deflation bias in years with strong third-party candidates.
+
+Using national average gas prices and a single CPI figure for all states asummes that every state experienced the same economic conditions in a given election year. This ignores meaningful regional variation - a voter in rural Montana paying high prices to commute long distances is treated identically to an urban voter who has access to public transit.
+
 ### Bias Mitigation 
 
+In order to mitigate the sources of bias identified in the data collection process, many steps were taken. To address inconsistencies in third-party vote reporting, incumbent vote share was calculated consistently across all election years using the same formula (total incumbent party votes/total votes cast). This ensured that no election year was treated differently from another, even if the resulting figures are not directly coparable to published tow-party vote share statistics.
+
+State-level details were preserved in the final dataset rather than collapsing immediately to national averages, which partially addresses the regional economic variation problem by allowing downstream analysis to examine how the relationship between gas prices, inflation, and incumbent performance differes across states.
+
+Both the gas price and CPI variables are clearly documented as national averages sources from FRED, so any analysis using these figures should be interpreted with the understanding that they represent broad economic conditions rather than localized voter experiences.
 
 ### Rationale 
 
+The decision to map incumbent party by election year rather than by candidate was a deliberate decision since it aligns with the theoretical framework of economic voting theory (holds that voters reward or punish the party in power rather than any individual candidate).
+
+Aggregating monthly gas prices and CPI values into a single annual average for each election year was chosen for simplicity - so this may understate the true relationship between economic conditions and electoral outcomes.
+Using states as the unit of analysis rather than the county or individual level was a practical jugement because of data availability, but this also asummes that the average economic conditions and average vote share within a state reflect the same underlying relationship that would be observed if individual-level data were available.
+
 
 ## Metadata
-### ER Diagram
-![ER Diagram](/images/ERD.png)
+### Implicit Schema
+- Unit of observation: each document in the MongoDB collection represents a single U.S. state in a single presidential year - so the natural key is a combination of `year` and `state_po`
+
+- Economic indicators are year-level, not state level: `gas_price_change_pct` and `inflation_rate` are national averages that repeat identically across all 51 states rows within a given election year 
+
+- Incumbent party is a derived categorical variable: `incumbent_party` field is not sourced directly from any of the three raw datasets but is manually encoded using domain knowledge about which party held the White House in each election year
+
+- Vote share is a computed ratio, not a raw count: `incumbent_vote_share` is a percentage derived from the raw `candidatevotes` totals in the MIT dataset - so it reflects the incumbent party's share of *all* votes cast rather than the two-party vote share, and downstream visualizations or models should treat it accordingly 
 
 ### Data Tables 
 | Table Name | Description | Link |
 |---|---|---|
+| `1976-2020-president.csv` | State-level U.S. presidential election returns for all candidates across 12 election cycles from 1976 to 2020, sourced from the MIT Election Data Science Lab | [1976-2020-president.csv](https://github.com/rachelsseo/pumps-to-polls/blob/main/data/1976-2020-president.csv) |
+| `avg_gas_price.csv` | Monthly U.S. city average retail price of unleaded regular gasoline per gallon (FRED series APU000074714) from January 1976 to January 2020 | [avg_gas_price.csv](https://github.com/rachelsseo/pumps-to-polls/blob/main/data/avg_gas_price.csv) |
+| `cpi.csv` | Monthly Consumer Price Index for All Urban Consumers (FRED series CPIAUCSL) from January 1976 to January 2020, used to derive annual inflation rates | [cpi.csv](https://github.com/rachelsseo/pumps-to-polls/blob/main/data/cpi.csv) |
+| `election_economics` | Combined MongoDB collection merging all three sources above at the state-year level, containing incumbent vote share, gas price percent change, and inflation rate per election year per state | [data-creation.py](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/data-creation.py) |
 
 ### Data Dictionary 
 
+| Feature | Data Type | Description | Example |
+|---|---|---|---|
+| `year` | `int` | The presidential election year | `1980` |
+| `state` | `str` | Full name of the U.S. state or district | `ALABAMA` |
+| `state_po` | `str` | Two-letter postal abbreviation of the state | `AL` |
+| `incumbent_party` | `str` | The political party holding the White House in the given election year, manually encoded from domain knowledge | `DEMOCRAT` |
+| `incumbent_vote_share` | `float` | The incumbent party's share of all votes cast in that state in that election year, expressed as a percentage | `47.45` |
+| `gas_price_change_pct` | `float` | Year-over-year percentage change in the national average retail price of unleaded regular gasoline (FRED APU000074714), averaged across all months in the election year | `34.21` |
+| `inflation_rate` | `float` | Year-over-year percentage change in the Consumer Price Index for All Urban Consumers (FRED CPIAUCSL), averaged across all months in the election year | `13.55` |
 
 ### Uncertainty Quantification 
 
-
 | Feature | Table | Type | Description | Uncertainty Notes |
 |---|---|---|---|---|
-
+| `incumbent_vote_share` | `election_economics` | `float` | Incumbent party's share of all votes cast in a given state and election year, expressed as a percentage | Sensitive to third-party candidates — 1992 (Perot) artificially deflates both major party shares; calculated against all votes rather than two-party vote which reduces comparability across years |
+| `gas_price_change_pct` | `election_economics` | `float` | Year-over-year percentage change in the national average retail price of unleaded regular gasoline, averaged across all months in the election year | High variance driven by oil shock years (1979–1980) and the 2008 financial crisis collapse; national average masks significant regional price variation; missing for 2020 (~51 documents) |
+| `inflation_rate` | `election_economics` | `float` | Year-over-year percentage change in the Consumer Price Index for All Urban Consumers, averaged across all months in the election year | Skewed right by high-inflation years of 1979–1981; full-year average may understate electoral impact compared to a pre-election window as suggested by Doti & Campbell (2023); missing for 2020 (~51 documents) |
+| `incumbent_party` | `election_economics` | `str` | Political party holding the White House in the given election year | Manually encoded judgment-dependent field — uncertainty arises in open-seat elections (2000, 2008) where voters may not attribute economic conditions to the incumbent party's candidate |
+| `year` | `election_economics` | `int` | Presidential election year | No uncertainty — discrete fixed values every four years from 1976 to 2020 |
+| `state` | `election_economics` | `str` | Full name of the U.S. state or district | No uncertainty — sourced directly from MIT Election Data Science Lab certified returns |
+| `state_po` | `election_economics` | `str` | Two-letter postal abbreviation of the state | No uncertainty — standard USPS abbreviations derived directly from the MIT dataset |
