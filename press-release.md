@@ -13,5 +13,5 @@ You don't need to follow the. news obsessively or understand economic policy to 
 
 ## Chart
 
-![ER Diagram](/images/ierad_results.png)
+![Chart](/images/press_release_chart.png)
 

@@ -10,7 +10,7 @@
 ### NetID - ydp7xv
 ### DOI - [https://doi.org/10.5281/zenodo.19356307](https://doi.org/10.5281/zenodo.19356307)
 ### Press Release
-[****]()
+[**At the Pump and At the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
 ### Data - [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6)
 ### Pipeline - [Link to Analysis Code]()
 ### License - [MIT](https://github.com/rachelsseo/pumps-to-polls/blob/main/LICENSE.md)
