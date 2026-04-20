@@ -1,4 +1,4 @@
-# DS 4320 Project 2 - Predicting Election Results
+# DS 4320 Project 2: Predicting Election Results
 
 ### Executive Summary
 
@@ -19,11 +19,11 @@ This project investigates whether consumer-facing economic indicators (specifica
 |---|---|
 | Name | Rachel Seo |
 | NetID | ydp7xv |
-| DOI | [https://doi.org/10.5281/zenodo.19657391)](https://doi.org/10.5281/zenodo.19657391) |
+| DOI | [https://doi.org/10.5281/zenodo.19657391](https://doi.org/10.5281/zenodo.19657391) |
 | Press Release | [At the Pump and At the Polls](https://github.com/rachelsseo/pump-to-polls/blob/main/press-release.md) |
 | Data | [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6) |
 | Pipeline | [Link to Analysis Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/full-pipeline.ipynb)|
-| License | [MIT](https://github.com/rachelsseo/pump-to-polls/blob/main/LICENSE.md) |
+| License | [MIT](https://github.com/rachelsseo/pumps-to-polls/blob/main/LICENSE.md) |
 
 ---
 
