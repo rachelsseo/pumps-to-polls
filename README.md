@@ -2,19 +2,19 @@
 
 ### Executive Summary
 
-
+This project investigates whether consumer-facing economic indicators (specifically gasoline prices and inflation) are statistically associated with incumbent party performance in U.S. presidential elections from 1976 to 2020. Motivated by the theory of economic voting, which holds that voters reward or punish the party in power based on how the economy feels in their daily lives, the analysis combines three publicly available datasets: state-level presidential election returns from the MIT Election Data Science Lab, monthly retail gasoline prices from the Federal Reserve Economic Data (FRED), and monthly Consumer Price Index data from FRED. These sources were merged at the state-year level, producing approximately 600 documents stored in a MongoDB Atlas collection, and analyzed using correlation analysis and both simple and multiple linear regression. The findings suggest that both gas price changes and inflation rate are negatively associated with incumbent vote share. So, when prices rise, the party in power tends to lose ground at the polls, though the strength of this relationship varies across election cycles and is moderated by factors including political polarization, third-party candidacies, and regional economic variation.
 
 ---
-
 ### Name - Rachel Seo
 ### NetID - ydp7xv
 ### DOI - [https://doi.org/10.5281/zenodo.19356307](https://doi.org/10.5281/zenodo.19356307)
 ### Press Release
 [**At the Pump and At the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
 ### Data - [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6)
-### Pipeline - [Link to Analysis Code]()
+### Pipeline - [Link to Analysis Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/full-pipeline.ipynb)
 ### License - [MIT](https://github.com/rachelsseo/pumps-to-polls/blob/main/LICENSE.md)
 ---
+
 | Spec | Value |
 |---|---|
 | Name | Rachel Seo |
@@ -22,7 +22,7 @@
 | DOI | [https://doi.org/10.5281/zenodo.19356307](https://doi.org/10.5281/zenodo.19356307) |
 | Press Release | [At the Pump and at the Polls](https://github.com/rachelsseo/pump-to-polls/blob/main/press-release.md) |
 | Data | [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6) |
-| Pipeline | [Link to Analysis Code]()|
+| Pipeline | [Link to Analysis Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/full-pipeline.ipynb)|
 | License | [MIT](https://github.com/rachelsseo/pump-to-polls/blob/main/LICENSE.md) |
 
 ---
@@ -39,11 +39,12 @@ Voters often feel the everyday economic impacts through changing gas prices and 
 Economic conditions are widely believed to influence electoral outcomes, yet the precise relationship between consumer-facing indicators (gasoline prices and inflation) and incumbent party performance remains difficult to quantify. Through this project, I want to explore the relationship between these indicators and the electoral outcomes - just based on curiousity. Although my data only spans from 1976 to 2020, it will be interesting to see what patterns and trends emerge and whether they will continue on in the next presidential election.
 
 ### Press Release Headline and Link
-[****]()
+[**At the Pump and at the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
 
 ## Domain Exposition
 
 *Summary Table*
+
 | Term | Definition |
 |---|---|
 | U.S. Bureau of Labor Statistics | The principal fact-finding agency for the Federal Government in the broad field of labor economics and statistics - where FRED pulls data from. |
@@ -53,6 +54,7 @@ Economic conditions are widely believed to influence electoral outcomes, yet the
 | Popular vote | Decision made by voters reflected in the share of votes won by a particular candidate, party or option in a referendum.|
 
 *Subject Domain*
+
 This project lives in the intersection of political science, economics, and data science. More specifically, this project dives deeper into the field of electoral studies within political science, it examines voting behavior, party performance, and what drive election outcomes. We draw upon macroeconomic concepts as we use CPI and gas prices as explanatory variables. The application portion/methodology - regression modeling & correlation analysis - of the research is firmly data science. 
 
 
@@ -109,6 +111,7 @@ Using states as the unit of analysis rather than the county or individual level 
 
 
 ## Metadata
+
 ### Implicit Schema
 - Unit of observation: each document in the MongoDB collection represents a single U.S. state in a single presidential year - so the natural key is a combination of `year` and `state_po`
 
@@ -119,6 +122,7 @@ Using states as the unit of analysis rather than the county or individual level 
 - Vote share is a computed ratio, not a raw count: `incumbent_vote_share` is a percentage derived from the raw `candidatevotes` totals in the MIT dataset - so it reflects the incumbent party's share of *all* votes cast rather than the two-party vote share, and downstream visualizations or models should treat it accordingly 
 
 ### Data Tables 
+
 | Table Name | Description | Link |
 |---|---|---|
 | `1976-2020-president.csv` | State-level U.S. presidential election returns for all candidates across 12 election cycles from 1976 to 2020, sourced from the MIT Election Data Science Lab | [1976-2020-president.csv](https://github.com/rachelsseo/pumps-to-polls/blob/main/data/1976-2020-president.csv) |

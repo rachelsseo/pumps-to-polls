@@ -1,0 +1,35 @@
+2026-04-19 23:20:46,552 [INFO] Connected to MongoDB successfully
+2026-04-19 23:20:46,636 [INFO] Loaded 612 documents from MongoDB
+2026-04-19 23:20:54,643 [INFO] Dropped 51 rows with missing economic indicators (2020)
+2026-04-19 23:20:54,648 [INFO] Working with 561 documents across 11 election years
+2026-04-19 23:21:01,018 [INFO] Aggregated to national level: 11 election years
+2026-04-19 23:21:01,023 [INFO] 
+ year incumbent_party  gas_price_change_pct  inflation_rate  avg_vote_share
+ 1980        DEMOCRAT                 37.85           13.50       39.910980
+ 1984      REPUBLICAN                 -2.33            4.37       59.707059
+ 1988      REPUBLICAN                 -0.24            4.10       53.662745
+ 1992      REPUBLICAN                 -1.19            3.04       37.555098
+ 1996        DEMOCRAT                  7.30            2.94       47.909608
+ 2000        DEMOCRAT                 29.60            3.37       45.919020
+ 2004      REPUBLICAN                 18.19            2.67       52.219804
+ 2008      REPUBLICAN                 16.63            3.81       46.946078
+ 2012        DEMOCRAT                  3.33            2.07       48.941569
+ 2016        DEMOCRAT                -12.50            1.27       44.568627
+ 2020      REPUBLICAN                -17.52            1.25       49.157059
+2026-04-19 23:21:09,122 [INFO] Correlation matrix:
+                      avg_vote_share  gas_price_change_pct  inflation_rate
+avg_vote_share                 1.000                -0.276          -0.298
+gas_price_change_pct          -0.276                 1.000           0.689
+inflation_rate                -0.298                 0.689           1.000
+2026-04-19 23:21:14,579 [INFO] Gas price regression — coef: -0.1002, intercept: 48.5844, R²: 0.0760
+2026-04-19 23:21:14,580 [INFO] Interpretation: A 1% increase in gas prices is associated with a -0.100% change in incumbent vote share
+2026-04-19 23:21:25,830 [INFO] Inflation regression — coef: -0.5460, intercept: 49.9674, R²: 0.0886
+2026-04-19 23:21:25,833 [INFO] Interpretation: A 1% increase in inflation is associated with a -0.546% change in incumbent vote share
+2026-04-19 23:21:28,240 [INFO] Multiple regression — gas coef: -0.0489, inflation coef: -0.3759, intercept: 49.6638, R²: 0.0981
+2026-04-19 23:21:30,865 [INFO] Chart saved to economic_voting_analysis.png
+2026-04-19 23:28:18,729 [INFO] Model comparison:
+          Model    R²
+ Gas Price Only 0.076
+ Inflation Only 0.089
+Gas + Inflation 0.098
+2026-04-19 23:28:18,734 [INFO] Analysis pipeline complete
