@@ -48,12 +48,12 @@ try:
     if not mongo_uri:
         raise ValueError("MONGO_URI not found in .env file")
 
-    client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+    client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000) # establishes a connection pool to the Atlas cluster
     client.server_info()
     log.info("Connected to MongoDB successfully")
 
     collection = client["data_by_design"]["election_economics"]
-    df = pd.DataFrame(list(collection.find({}, {"_id": 0})))
+    df = pd.DataFrame(list(collection.find({}, {"_id": 0}))) # collection.find: returns a cursor of all documents matching the filter ({} = all)
     log.info(f"Loaded {len(df)} documents from MongoDB")
 
 except ValueError as e:
@@ -90,7 +90,7 @@ try:
     national = df.groupby(["year", "incumbent_party", "gas_price_change_pct", "inflation_rate"]) \
                  .agg(avg_vote_share=("incumbent_vote_share", "mean")) \
                  .reset_index() \
-                 .sort_values("year")
+                 .sort_values("year") # sort_values: sorts the DataFrame by year in ascending order
     log.info(f"Aggregated to national level: {len(national)} election years")
     log.info(f"\n{national.to_string(index=False)}")
 except Exception as e:
@@ -143,7 +143,7 @@ try:
 
     model_gas = LinearRegression().fit(X_gas, y)
     y_pred_gas = model_gas.predict(X_gas)
-    r2_gas = r2_score(y, y_pred_gas)
+    r2_gas = r2_score(y, y_pred_gas) # r2_score: compares predicted vs actual values
 
     log.info(f"Gas price regression — coef: {model_gas.coef_[0]:.4f}, "
              f"intercept: {model_gas.intercept_:.4f}, R²: {r2_gas:.4f}")
@@ -186,8 +186,8 @@ except Exception as e:
 
 
 ```python
-try:
-    X_multi = national[["gas_price_change_pct", "inflation_rate"]].values
+try: 
+    X_multi = national[["gas_price_change_pct", "inflation_rate"]].values  # the model finds the best plane (not line) through the data in 3D space
 
     model_multi = LinearRegression().fit(X_multi, y)
     y_pred_multi = model_multi.predict(X_multi)

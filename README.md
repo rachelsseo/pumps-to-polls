@@ -20,7 +20,7 @@ This project investigates whether consumer-facing economic indicators (specifica
 | Name | Rachel Seo |
 | NetID | ydp7xv |
 | DOI | [https://doi.org/10.5281/zenodo.19657391)](https://doi.org/10.5281/zenodo.19657391) |
-| Press Release | [At the Pump and at the Polls](https://github.com/rachelsseo/pump-to-polls/blob/main/press-release.md) |
+| Press Release | [At the Pump and At the Polls](https://github.com/rachelsseo/pump-to-polls/blob/main/press-release.md) |
 | Data | [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6) |
 | Pipeline | [Link to Analysis Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/full-pipeline.ipynb)|
 | License | [MIT](https://github.com/rachelsseo/pump-to-polls/blob/main/LICENSE.md) |
@@ -39,7 +39,7 @@ Voters often feel the everyday economic impacts through changing gas prices and 
 Economic conditions are widely believed to influence electoral outcomes, yet the precise relationship between consumer-facing indicators (gasoline prices and inflation) and incumbent party performance remains difficult to quantify. Through this project, I want to explore the relationship between these indicators and the electoral outcomes - just based on curiousity. Although my data only spans from 1976 to 2020, it will be interesting to see what patterns and trends emerge and whether they will continue on in the next presidential election.
 
 ### Press Release Headline and Link
-[**At the Pump and at the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
+[**At the Pump and At the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
 
 ## Domain Exposition
 
