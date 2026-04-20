@@ -2,14 +2,14 @@
 
 ### Executive Summary
 
-This project investigates whether consumer-facing economic indicators (specifically gasoline prices and inflation) are statistically associated with incumbent party performance in U.S. presidential elections from 1976 to 2020. Motivated by the theory of economic voting, which holds that voters reward or punish the party in power based on how the economy feels in their daily lives, the analysis combines three publicly available datasets: state-level presidential election returns from the MIT Election Data Science Lab, monthly retail gasoline prices from the Federal Reserve Economic Data (FRED), and monthly Consumer Price Index data from FRED. These sources were merged at the state-year level, producing approximately 600 documents stored in a MongoDB Atlas collection, and analyzed using correlation analysis and both simple and multiple linear regression. The findings suggest that both gas price changes and inflation rate are negatively associated with incumbent vote share. So, when prices rise, the party in power tends to lose ground at the polls, though the strength of this relationship varies across election cycles and is moderated by factors including political polarization, third-party candidacies, and regional economic variation.
+This project investigates whether consumer-facing economic indicators (specifically gasoline prices and inflation) are statistically associated with incumbent party performance in U.S. presidential elections from 1976 to 2020. The analysis combines three publicly available datasets: state-level presidential election returns from the MIT Election Data Science Lab, monthly retail gasoline prices from the Federal Reserve Economic Data (FRED), and monthly Consumer Price Index data from FRED. These sources were merged at the state-year level, producing approximately 600 documents stored in a MongoDB Atlas collection, and analyzed using correlation analysis and both simple and multiple linear regression. The findings suggest that both gas price changes and inflation rate are negatively associated with incumbent vote share. So, when prices rise, the party in power tends to lose ground at the polls, though the strength of this relationship varies across election cycles and is moderated by factors including political polarization, third-party candidacies, and regional economic variation.
 
 ---
 ### Name - Rachel Seo
 ### NetID - ydp7xv
-### DOI - [https://doi.org/10.5281/zenodo.19356307](https://doi.org/10.5281/zenodo.19356307)
-### Press Release
-[**At the Pump and At the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
+### DOI - [https://doi.org/10.5281/zenodo.19657391](https://doi.org/10.5281/zenodo.19657391)
+### Press Release 
+#### [**At the Pump and At the Polls**](https://github.com/rachelsseo/pumps-to-polls/blob/main/press-release.md)
 ### Data - [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6)
 ### Pipeline - [Link to Analysis Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/full-pipeline.ipynb)
 ### License - [MIT](https://github.com/rachelsseo/pumps-to-polls/blob/main/LICENSE.md)
@@ -19,7 +19,7 @@ This project investigates whether consumer-facing economic indicators (specifica
 |---|---|
 | Name | Rachel Seo |
 | NetID | ydp7xv |
-| DOI | [https://doi.org/10.5281/zenodo.19356307](https://doi.org/10.5281/zenodo.19356307) |
+| DOI | [https://doi.org/10.5281/zenodo.19657391)](https://doi.org/10.5281/zenodo.19657391) |
 | Press Release | [At the Pump and at the Polls](https://github.com/rachelsseo/pump-to-polls/blob/main/press-release.md) |
 | Data | [Link to Data in OneDrive](https://myuva-my.sharepoint.com/:f:/g/personal/ydp7xv_virginia_edu/IgABdGPnCfnZTreqtZTAhl15AbNbqImbOeT5r1bYr74uxzo?e=aBlyP6) |
 | Pipeline | [Link to Analysis Code](https://github.com/rachelsseo/pumps-to-polls/blob/main/scripts/full-pipeline.ipynb)|
