@@ -52,8 +52,8 @@ try:
     client.server_info()
     log.info("Connected to MongoDB successfully")
 
-    collection = client["data_by_design"]["election_economics"]
-    df = pd.DataFrame(list(collection.find({}, {"_id": 0}))) # returns a cursor of all documents matching the filter ({} = all)
+    collection = client["data_by_design"]["election_economics"]  # returns a cursor of all documents matching the filter ({} = all)
+    df = pd.DataFrame(list(collection.find({}, {"_id": 0})))
     log.info(f"Loaded {len(df)} documents from MongoDB")
 
 except ValueError as e:
@@ -64,8 +64,8 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:20:46,552 [INFO] Connected to MongoDB successfully
-    2026-04-19 23:20:46,636 [INFO] Loaded 612 documents from MongoDB
+    2026-04-22 15:02:34,557 [INFO] Connected to MongoDB successfully
+    2026-04-22 15:02:34,665 [INFO] Loaded 612 documents from MongoDB
 
 
 
@@ -78,8 +78,8 @@ log.info(f"Dropped {dropped} rows with missing economic indicators (2020)")
 log.info(f"Working with {len(df)} documents across {df['year'].nunique()} election years")
 ```
 
-    2026-04-19 23:20:54,643 [INFO] Dropped 51 rows with missing economic indicators (2020)
-    2026-04-19 23:20:54,648 [INFO] Working with 561 documents across 11 election years
+    2026-04-22 15:02:38,964 [INFO] Dropped 0 rows with missing economic indicators (2020)
+    2026-04-22 15:02:38,965 [INFO] Working with 561 documents across 11 election years
 
 
 ### 2. Aggregating to national level
@@ -98,8 +98,8 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:21:01,018 [INFO] Aggregated to national level: 11 election years
-    2026-04-19 23:21:01,023 [INFO] 
+    2026-04-22 15:02:40,764 [INFO] Aggregated to national level: 11 election years
+    2026-04-22 15:02:40,768 [INFO] 
      year incumbent_party  gas_price_change_pct  inflation_rate  avg_vote_share
      1980        DEMOCRAT                 37.85           13.50       39.910980
      1984      REPUBLICAN                 -2.33            4.37       59.707059
@@ -126,7 +126,7 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:21:09,122 [INFO] Correlation matrix:
+    2026-04-22 15:02:42,808 [INFO] Correlation matrix:
                           avg_vote_share  gas_price_change_pct  inflation_rate
     avg_vote_share                 1.000                -0.276          -0.298
     gas_price_change_pct          -0.276                 1.000           0.689
@@ -134,6 +134,8 @@ except Exception as e:
 
 
 ### 4. Regression: Vote Share &  Gas Price Change
+
+Rationale: Gas prices are one of the most visible economic indicators in American life, appearing on signs at every street corner and directly affecting the daily budget of nearly every household, making them a natural first candidate for explaining electoral outcomes. A simple linear regression between year-over-year gas price change and incumbent vote share isolates this single relationship and allows us to quantify both the direction and magnitude of the association. Specifically, whether rising prices at the pump translate into measurable losses at the polls. This model serves as a baseline that is easy to interpret and communicate to a non-technical audience, which is particularly important given the press release framing of this project.
 
 
 ```python
@@ -154,16 +156,18 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:21:14,579 [INFO] Gas price regression — coef: -0.1002, intercept: 48.5844, R²: 0.0760
-    2026-04-19 23:21:14,580 [INFO] Interpretation: A 1% increase in gas prices is associated with a -0.100% change in incumbent vote share
+    2026-04-22 15:02:45,647 [INFO] Gas price regression — coef: -0.1002, intercept: 48.5844, R²: 0.0760
+    2026-04-22 15:02:45,648 [INFO] Interpretation: A 1% increase in gas prices is associated with a -0.100% change in incumbent vote share
 
 
 ### 5. Regression: Vote Share & Inflation Rate
 
+Rationale: While gas prices capture a specific and highly visible cost, inflation rate measured by CPI captures the broader experience of economic hardship across all consumer goods and services, making it a complementary indicator that reflects the overall purchasing power of voters. A separate simple regression on inflation allows us to assess whether the general cost of living or the specific cost of gasoline is a stronger predictor of incumbent performance. This analysis also directly engages with the academic literature, particularly Doti and Campbell (2023), who found CPI to be a highly significant predictor of incumbent vote share across 17 presidential elections.
+
 
 ```python
 try:
-    X_inf = national[["inflation_rate"]].values
+    X_inf = national[["inflation_rate"]].values 
 
     model_inf = LinearRegression().fit(X_inf, y)
     y_pred_inf = model_inf.predict(X_inf)
@@ -178,15 +182,17 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:21:25,830 [INFO] Inflation regression — coef: -0.5460, intercept: 49.9674, R²: 0.0886
-    2026-04-19 23:21:25,833 [INFO] Interpretation: A 1% increase in inflation is associated with a -0.546% change in incumbent vote share
+    2026-04-22 15:02:50,948 [INFO] Inflation regression — coef: -0.5460, intercept: 49.9674, R²: 0.0886
+    2026-04-22 15:02:50,949 [INFO] Interpretation: A 1% increase in inflation is associated with a -0.546% change in incumbent vote share
 
 
-### 6. Multiple Regression: Vote Share ~ Gas + Inflation 
+### 6. Multiple Regression: Vote Share ~ Gas & Inflation 
+
+Rationale: The multiple regression model combines both economic indicators into a single framework to assess whether they jointly explain more variation in incumbent vote share than either does alone, and to determine whether each indicator retains its predictive power after controlling for the other. This is important because gas prices and inflation are correlated with each other (rising oil prices contribute to broader inflation) so examining them in isolation may overstate the independent effect of each, and the multiple regression helps disentangle these overlapping signals. The R² from this model compared against the two simple regressions provides a concrete measure of how much explanatory power is gained by considering both indicators simultaneously, which speaks directly to the complexity of economic voting behavior.
 
 
 ```python
-try: 
+try:
     X_multi = national[["gas_price_change_pct", "inflation_rate"]].values  # model finds the best plane (not line) through the data in 3D space
 
     model_multi = LinearRegression().fit(X_multi, y)
@@ -201,10 +207,12 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:21:28,240 [INFO] Multiple regression — gas coef: -0.0489, inflation coef: -0.3759, intercept: 49.6638, R²: 0.0981
+    2026-04-22 15:02:53,020 [INFO] Multiple regression — gas coef: -0.0489, inflation coef: -0.3759, intercept: 49.6638, R²: 0.0981
 
 
 ### 7. Visualizations
+
+Rationale: The four-panel visualization serves as the primary communication tool for this project, translating the statistical findings into a format that is accessible to the non-technical audience described in the press release, where abstract regression coefficients are less meaningful than a chart showing 1980 (the year of peak inflation and gas prices) as a clear outlier where the incumbent Democrat lost decisively. Presenting vote share as colored bars distinguishes Republican from Democrat incumbents at a glance, which is essential context because the relationship between economic conditions and electoral outcomes may differ by party. The scatter plots with overlaid regression lines allow the reader to simultaneously see the overall trend, the individual election years as labeled data points, and the R² as a measure of how tightly the data clusters around that trend. This gives both the finding and an honest signal of its uncertainty in a single visual.
 
 
 ```python
@@ -213,7 +221,7 @@ try:
               for p in national["incumbent_party"]]
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    fig.suptitle("At the Pump and at the Polls\nEconomic Indicators vs. Incumbent Vote Share (1976–2016)",
+    fig.suptitle("At the Pump and at the Polls\nEconomic Indicators vs. Incumbent Vote Share (1976-2020)",
                  fontsize=13, fontweight="bold")
 
     # Plot 1: Vote share over time
@@ -295,12 +303,12 @@ except Exception as e:
     raise
 ```
 
-    2026-04-19 23:21:30,865 [INFO] Chart saved to economic_voting_analysis.png
+    2026-04-22 15:02:55,422 [INFO] Chart saved to economic_voting_analysis.png
 
 
 
     
-![png](full-pipeline_files/full-pipeline_16_1.png)
+![png](../images/analysis_md.png)
     
 
 
